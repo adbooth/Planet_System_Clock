@@ -5,7 +5,7 @@
 //Simple Animation - Planet System Clock
 //
 
-int squareSize = 756;
+int squareSize = 700;
 
 //Star drawing arrays
 int starMax = int(4*squareSize/3);
@@ -15,12 +15,13 @@ int[] starY = new int[starMax];
 void setup(){
   background(#FFFFFF);
   size(squareSize, squareSize);
-  
+  randomSeed(second());
+
   for(int starCount = 0; starCount < starY.length; starCount++){
     starX[starCount] = randInt(width);
     starY[starCount] = randInt(height);
   }
-  
+
 }//End of setup()
 
 
@@ -75,7 +76,7 @@ void draw(){
   noStroke();
   fill(#000000);
   for(int starCount = 0; starCount < starMax; starCount++){
-    //Draws stars 
+    //Draws stars
     noStroke();
     fill(#FFFFFF);
     size1 = randInt(3, 7);
@@ -83,19 +84,19 @@ void draw(){
     ellipse(starX[starCount],starY[starCount], size1, size2);
     ellipse(starX[starCount],starY[starCount], size2, size1);
   }//End star draw
-  
+
   frmRad = TWO_PI*(frameCount%60)/frameRate;  //frmRad used for pulsating bodies, as well as comet orbit
-  
+
   //Draw black hole
   center.drawBody(int(width/2), int(height/2), int(height/12 + height*cos(frmRad)/378));
-  
+
   //Draw sol revolving
   oSol = int(height/4);
   hSec = hour()*3600 + minute()*60 + second();
   hRad = TWO_PI*hSec/43200;  //12 hour clock
   //hRad = TWO_PI*hSec/86400;  //24 hour clock
   sol.drawBody(int(center.getX() + oSol*sin(hRad)), int(center.getY() - oSol*cos(hRad)), int(height/12));
-  
+
   //Draw world revolving
   oWorld = int(height/8);
   mSec = minute()*60 + second();
@@ -104,8 +105,8 @@ void draw(){
   //Draw world shadow
   fill(#000000, 128);
   arc(world.getX(), world.getY(), world.getDiameter() + 1, world.getDiameter() + 1, PI + mRad, TWO_PI + mRad);
-  
-  
+
+
   //Draw moon rotating
   if (pSecond != second()){
     currFrm = frameCount;
@@ -126,7 +127,7 @@ void draw(){
   }else{
     arc(moon.getX(), moon.getY(), moon.getDiameter() + 1, moon.getDiameter() + 1, HALF_PI - mnRad, PI + HALF_PI - mnRad);
   }
-  
+
   //Draw comet rotating
   oComet = int(height/55);
   comet.drawBody(int(moon.getX() + oComet*sin(frmRad)), int(moon.getY() - oComet*cos(frmRad)), int(height/150));
@@ -141,29 +142,29 @@ void draw(){
   }else{
     arc(comet.getX(), comet.getY(), comet.getDiameter() + 1, comet.getDiameter() + 1, HALF_PI - ctRad, PI + HALF_PI - ctRad);
   }
-/*  
+/*
   //Make moon center
   int oMNCent = int(width/24);
   mnCent.drawBody(int(world.getX() + oMoon*sin(sRad)), int(world.getY() - oMoon*cos(sRad)), int(height/94));
-  
+
   int oMoonBoth = int(width/128);
   moon1.drawBody(int(mnCent.getX() + oMoonBoth*sin(frmRad)), int(mnCent.getY() - oMoonBoth*cos(frmRad)), 5);
   moon2.drawBody(int(mnCent.getX() - oMoonBoth*sin(frmRad)), int(mnCent.getY() + oMoonBoth*cos(frmRad)), 5);
-*/  
-  
+*/
+
   //Mouse tracking conditionals
   if ((center.getX() - center.getDiameter()/2 <= mouseX) && (mouseX <= center.getX() + center.getDiameter()/2) && (center.getY() - center.getDiameter()/2 <= mouseY) && (mouseY <= center.getY() + center.getDiameter()/2)){
     center.drawInterface(oSol);
   }
-  
+
   if ((sol.getX() - sol.getDiameter()/2 <= mouseX) && (mouseX <= sol.getX() + sol.getDiameter()/2) && (sol.getY() - sol.getDiameter()/2 <= mouseY) && (mouseY <= sol.getY() + sol.getDiameter()/2)){
     sol.drawInterface(oWorld);
   }
-  
+
   if ((world.getX() - world.getDiameter()/2 <= mouseX) && (mouseX <= world.getX() + world.getDiameter()/2) && (world.getY() - world.getDiameter()/2 <= mouseY) && (mouseY <= world.getY() + world.getDiameter()/2)){
     world.drawInterface(oMoon);
   }
-  
+
   pSecond = second();
 }//End draw()
 

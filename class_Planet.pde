@@ -3,18 +3,18 @@ class Body{
   int _xPosition;
   int _yPosition;
   int _diameter;
-  
+
   Body(int t){
     //Only class constructor
     _type = t;
   }
-  
-  
+
+
   int getType(){
     //Type getter
     return _type;
   }
-  
+
   void setX(int x){
     //X coordinate setter
     _xPosition = x;
@@ -23,7 +23,7 @@ class Body{
     //X coordinate getter
     return _xPosition;
   }
-  
+
   void setY(int y){
     //Y coordinate setter
     _yPosition = y;
@@ -32,7 +32,7 @@ class Body{
     //Y coordinate getter
     return _yPosition;
   }
-  
+
   void setDiameter(int d){
     //Diameter setter
     _diameter = d;
@@ -41,14 +41,14 @@ class Body{
     //Diameter getter
     return _diameter;
   }
-  
+
   void drawBody(int x, int y, int d){
   //Draws planet depending on type
-    
+
     setX(x);
     setY(y);
     setDiameter(d);
-    noStroke();    
+    noStroke();
     switch(_type){
       case 0:
         //"Invisible planet"
@@ -56,7 +56,8 @@ class Body{
       case 1:
         //Black hole (center, pulsates for no particular reason)
         fill(#000000);
-        stroke(randInt(255), randInt(255), randInt(255), 80);
+        // stroke(randInt(255), randInt(255), randInt(255), 80);
+        stroke(255, 255, 255, 80);
         strokeWeight(1);
         ellipse(getX(), getY(), getDiameter(), getDiameter());
         break;
@@ -93,7 +94,7 @@ class Body{
   //Draws clock interface given orbit
     int lineMax = 0;
     int lineMod = 0;
-    
+
     noFill();
     stroke(#FFFFFF, 128);
 //    rect(getX() - getDiameter()/2 - 1, getY() - getDiameter()/2 - 1, getDiameter(), getDiameter());
@@ -117,7 +118,7 @@ class Body{
         println("ERR: switch(_type) in drawInterface() defaulted");
         break;
     }
-    
+
     for(int lineCounter = 1; lineCounter <= lineMax; lineCounter++){
       if (lineCounter%lineMod == 0){
         strokeWeight(3);
@@ -128,5 +129,5 @@ class Body{
     }
     strokeWeight(1);
   }//End drawInterface()
-  
+
 }//End class Planet
